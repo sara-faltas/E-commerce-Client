@@ -39,15 +39,15 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         <Route path="/productList" element={<ProductList/>} />
-        <Route path="/productDetail" element={<ProductDetail/>}/>
+        <Route path="/product/:productId" element={<ProductDetail/>}/>
 
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/addProduct" element={<AddProduct/>} />
-        <Route path="/editProduct" element={<EditProduct/>} />
+        <Route path="/editProduct/:productId" element={<EditProduct/>} />
 
         <Route path="/userProfile" element={<UserProfile/>} />
         <Route path="/addReview" element={<AddReview/>} />
-        <Route path="/editReview" element={<EditReview/>} />
+        <Route path="/editReview/:reviewId" element={<EditReview/>} />
         <Route path="/favorite" element={<Favorite/>}/>
 
 

@@ -7,6 +7,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavbarBrand from "react-bootstrap/NavbarBrand";
 import NavbarToggle from "react-bootstrap/NavbarToggle";
 import { Button } from "bootstrap";
+import { Navigate } from "react-router-dom";
 
 import logo from "../images/logobags.avif"
 
@@ -32,13 +33,14 @@ function MyNavbar() {
     <Navbar expand="sm" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand as={Link} to="/">
-          <img
-            src={logo}
-            alt="Logo"
-            className="navbar-brand"
-            width={160}
-            height={100}
-          />
+           <img
+              alt=""
+              src={logo}
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            />{' '}
+            MyShop
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

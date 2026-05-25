@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import service from "../services/index.services";
 import ProductCard from "../components/ProductCard";
+import AddProduct from './Admin/AddProduct';
+
+import { Dropdown } from "bootstrap";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import ListGroup from "react-bootstrap/ListGroup";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
+
 
 
 
 function ProductList() {
     
-  const [activeTab, setActiveTab] = useState("all");
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [category, setCategory] = useState("");
-  const [dataOnlyForLoggedUsers, setData] = useState(null)
+
 
   useEffect(() => {
     getData()
@@ -17,11 +30,9 @@ function ProductList() {
 
   const getData = async () => {
     try {
-      const response = await service.get (`${import.meta.env.VITE_SERVER_URL}/api/product`,)
-      setData(response.data)
+      const response = await service.get (`${import.meta.env.VITE_SERVER_URL}/api/product`)
       setProduct(response.data)
-      // call a private route here...
-
+      console.log(response.data)
     } catch (error) {
       console.log(error)
     }
@@ -29,28 +40,31 @@ function ProductList() {
 
   // loading handler here
 
-  if(!dataOnlyForLoggedUsers){
+  if(!product){
     return <h1>loading...</h1>
   }
 
-
-  //this to filter by product category
-  const displayedProducts = product.filter((product) => {
-    return category ? product.category === category : true;
-  });
-
   return (
-    <div>
-      
-      {displayedProducts.length === 0 ? (
-          <p>Check Product later, we are working to fix the problem</p>
-        ) : (
-          displayedProducts.map((product) => (
-            <ProductCard key={product.id} product={product}  />
+     <div>
+      <h2 style={{ marginTop: "2rem", marginBottom: "2rem" }}>Product List</h2>
+
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent:"space-around",
+          alignContent:"center",
+          gap: '1rem',
+          margin: '2rem'
+        }}
+      >
+         { product.map((product) => (
+            <ProductCard key={product._id} product={product}  />
           ))
-        )}
+        }
+      </div>
     </div>
-  )
+  );
 }
 
 export default ProductList

@@ -11,6 +11,7 @@ import { ToggleButton } from "react-bootstrap";
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
+import service from "../../services/index.services";
 
 
 
@@ -34,7 +35,7 @@ function Login() {
     };
 
     try {
-      const response = await axios.post(
+      const response = await service.post(
         "http://localhost:5005/api/auth/login",
         body,
       );
