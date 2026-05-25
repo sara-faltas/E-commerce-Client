@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import service from "../services/index.services";
 import ProductCard from "../components/ProductCard";
-import Button from '@mui/material/Button';
+
 
 
 function ProductList() {
@@ -17,8 +17,9 @@ function ProductList() {
 
   const getData = async () => {
     try {
-      const response = await service.get (`${import.meta.env.VITE_SERVER_URL}/product`,)
+      const response = await service.get (`${import.meta.env.VITE_SERVER_URL}/api/product`,)
       setData(response.data)
+      setProduct(response.data)
       // call a private route here...
 
     } catch (error) {
@@ -34,7 +35,7 @@ function ProductList() {
 
 
   //this to filter by product category
-  const displayedProducts = props.product.filter((product) => {
+  const displayedProducts = product.filter((product) => {
     return category ? product.category === category : true;
   });
 

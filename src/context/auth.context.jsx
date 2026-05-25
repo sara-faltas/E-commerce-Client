@@ -11,6 +11,7 @@ function AuthWrapper(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedUserId, setLoggedUserId] = useState(null);
   const [isAuthenticating, setIsAuthenticating]=useState(true)
+  const [loggedUserRole,setLoggedUserRole]=useState()
   
   
   // this function to verify user with the backend
@@ -29,6 +30,7 @@ function AuthWrapper(props) {
       //assume the token is valid
       setIsLoggedIn(true);
       setLoggedUserId(response.data.payload._id);
+      setLoggedUserRole(response.data.payload.role)
 
       setIsAuthenticating(false)
     } catch (error) {
@@ -37,6 +39,7 @@ function AuthWrapper(props) {
       setIsLoggedIn(false);
       setLoggedUserId(null);
       setIsAuthenticating(false)
+      setLoggedUserRole(null)
     }
   }
 
@@ -53,6 +56,8 @@ function AuthWrapper(props) {
     setIsLoggedIn,
     loggedUserId,
     setLoggedUserId,
+    loggedUserRole,
+    setLoggedUserRole
   };
   return (
     <AuthContext.Provider value={passedContext}>

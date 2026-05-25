@@ -1,5 +1,5 @@
 import ProductCard from "../components/ProductCard"
-import FavoriteIcon from '@mui/icons-material/Favorite';
+
 
 
 function HomePage() {

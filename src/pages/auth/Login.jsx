@@ -1,13 +1,21 @@
+import { Dropdown } from "bootstrap";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Button from "react-bootstrap/Button";
+import Badge from "react-bootstrap/Badge";
+import { ToggleButton } from "react-bootstrap";
+
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
 import { useContext } from "react";
-import { Box, TextField, Button, Typography } from "@mui/material";
-import MyButton from "../../components/MyButton";
+
+
 
 function Login() {
-  const { setIsLoggedIn, setLoggedUserId } = useContext(AuthContext);
+  const { setIsLoggedIn, setLoggedUserId, setLoggedUserRole } = useContext(AuthContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,9 +44,10 @@ function Login() {
       //update the auth context states accordingly
       setIsLoggedIn(true);
       setLoggedUserId(response.data.payload._id);
+      setLoggedUserRole(response.data.payload.role);
 
       console.log(response.data);
-      navigate("/private-page");
+      navigate("/");
     } catch (error) {
       console.log(error);
       if (error.response.status === 400) {
@@ -50,50 +59,48 @@ function Login() {
     }
   };
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#f5f5f5",
-      }}
-    >
-      <Box sx={{ width: 350, p: 4, backgroundColor: "white", borderRadius: 2 }}>
-        <Typography variant="h5" textAlign="center" mb={2}>
-          Login
-        </Typography>
+<div>
+      <h3 style={{ marginTop: "4rem", marginBottom: "2rem" }}>
+        Login
+      </h3>
 
-        <form >
-          <TextField
-            fullWidth
-            label="Email"
-            name="email"
-            type="email"
+      <form style={{ margin: "2rem" }}>
+       
+       <InputGroup className="mb-4">
+          <InputGroup.Text id="inputGroup-sizing-default">
+            Email
+          </InputGroup.Text>
+          <Form.Control
+            aria-label="Default"
+            aria-describedby="inputGroup-sizing-default"
             value={email}
             onChange={handleEmailChange}
             required
-            margin="normal"
+            type="email"
           />
+        </InputGroup>
 
-          <TextField
-            fullWidth
-            label="Password"
-            name="password"
-            type="password"
+          <InputGroup className="mb-4">
+          <InputGroup.Text id="inputGroup-sizing-default">
+            Password
+          </InputGroup.Text>
+          <Form.Control
+            aria-label="Default"
+            aria-describedby="inputGroup-sizing-default"
             value={password}
             onChange={handlePasswordChange}
             required
-            margin="normal"
+            type="password"
           />
+        </InputGroup>
+          
 
-          <MyButton onClick={handleLogin} bgColor="darkred" hoverColor="brown">
+          <button onClick={handleLogin} >
             Login
-          </MyButton>
+          </button>
           {errorMsg && <p>{errorMsg}</p>}
         </form>
-      </Box>
-    </Box>
+   </div>
   );
 }
 

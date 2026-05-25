@@ -8,7 +8,7 @@ const service = axios.create({
 // so adding the token to every single request(if it exist)
 service.interceptors.request.use((config)=>{
 
-    const authToken = localStorage.getItem("auth.Token")
+    const authToken = localStorage.getItem("authToken")
 
     if (authToken){
         config.headers.authorization = `Bearer ${authToken}`

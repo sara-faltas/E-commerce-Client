@@ -1,8 +1,16 @@
+import { Dropdown } from "bootstrap";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Button from "react-bootstrap/Button";
+import Badge from "react-bootstrap/Badge";
+import { ToggleButton } from "react-bootstrap";
+
 import service from "../../services/index.services";
-import { Box, TextField, Button, Typography } from "@mui/material";
-import MyButton from "../../components/MyButton";
+
+
 
 function Signup() {
   const navigate = useNavigate();
@@ -44,70 +52,80 @@ function Signup() {
   };
 
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#f5f5f5",
-      }}
-    >
-      <Box sx={{ width: 350, p: 4, backgroundColor: "white", borderRadius: 2 }}>
-        <Typography variant="h5" textAlign="center" mb={2}>
-          Sign Up
-        </Typography>
+   
+      <div>
+      <h3 style={{ marginTop: "4rem", marginBottom: "2rem" }}>
+        Sign up
+      </h3>
 
-        <form>
-          <TextField
-            fullWidth
-            label="First Name"
-            name="firstName"
+      <form style={{ margin: "2rem" }}>
+       
+        <InputGroup className="mb-4">
+          <InputGroup.Text id="inputGroup-sizing-default">
+            First Name
+          </InputGroup.Text>
+          <Form.Control
+            aria-label="Default"
+            aria-describedby="inputGroup-sizing-default"
             value={firstName}
             onChange={handleFirstNameChange}
             required
-            margin="normal"
           />
-
-          <TextField
-            fullWidth
-            label="Last Name"
-            name="lastName"
+        </InputGroup>
+      
+       <InputGroup className="mb-4">
+          <InputGroup.Text id="inputGroup-sizing-default">
+            Last Name
+          </InputGroup.Text>
+          <Form.Control
+            aria-label="Default"
+            aria-describedby="inputGroup-sizing-default"
             value={lastName}
             onChange={handleLastNameChange}
             required
-            margin="normal"
           />
+        </InputGroup>
 
-          <TextField
-            fullWidth
-            label="Email"
-            name="email"
-            type="email"
+        <InputGroup className="mb-4">
+          <InputGroup.Text id="inputGroup-sizing-default">
+            Email
+          </InputGroup.Text>
+          <Form.Control
+            aria-label="Default"
+            aria-describedby="inputGroup-sizing-default"
             value={email}
             onChange={handleEmailChange}
             required
-            margin="normal"
+            type="email"
           />
+        </InputGroup>
 
-          <TextField
-            fullWidth
-            label="Password"
-            name="password"
-            type="password"
+          <InputGroup className="mb-4">
+          <InputGroup.Text id="inputGroup-sizing-default">
+            Password
+          </InputGroup.Text>
+          <Form.Control
+            aria-label="Default"
+            aria-describedby="inputGroup-sizing-default"
             value={password}
             onChange={handlePasswordChange}
             required
-            margin="normal"
+            type="password"
           />
-          <MyButton onClick={handleSignup} bgColor="darkred" hoverColor="brown">
+        </InputGroup>
+
+         
+          <button onClick={handleSignup} >
             Create Account
-          </MyButton>
+          </button>
 
           {errorMsg && <p>{errorMsg}</p>}
+       
+       
         </form>
-      </Box>
-    </Box>
+    </div>
+
+
   );
 }
 
