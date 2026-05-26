@@ -7,6 +7,8 @@ function Dashboard() {
     <div>
       <h1>Dashboard</h1>
     <AddProduct/>
+    {/* <ProductList/> */}
+    {/* <ManageHomePage/> */}
    
 </div>
   )

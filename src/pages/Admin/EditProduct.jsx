@@ -76,6 +76,7 @@ function EditProduct() {
     }
   };
 
+  
   return (
     <div>
       <h2 style={{ marginTop: "4rem", marginBottom: "2rem" }}>Edit Product</h2>
