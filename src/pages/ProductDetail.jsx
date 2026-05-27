@@ -11,6 +11,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 import Accordion from "react-bootstrap/Accordion";
 import AddReview from "./Users/AddReview";
+import EditReview from "./Users/EditReview";
 
 import backpack from "../images/backpack.webp";
 
@@ -23,6 +24,7 @@ function ProductDetail() {
   const [reviews, setReviews] = useState([]);
   const [showReviews, setShowReviews] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [ShowEditReviewForm, setShowEditReviewForm]= useState(false)
 
   useEffect(() => {
     getData();
@@ -35,7 +37,6 @@ function ProductDetail() {
         `${import.meta.env.VITE_SERVER_URL}/api/product/${productId}`,
       );
       setProduct(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -66,6 +67,7 @@ function ProductDetail() {
     }
   };
 
+ 
   return (
     <div>
       <Card
@@ -115,6 +117,22 @@ function ProductDetail() {
                         ))}
                       </div>
                       <Card.Text> {review.reviewText} </Card.Text>
+                       {isLoggedIn && loggedUserRole === "user" && (
+            <>
+              <button
+                style={{ margin: "0.5rem" }}
+                type="button"
+                className="btn btn-primary"
+                onClick={() => setShowEditReviewForm(true)}
+              >
+                Edit review
+              </button>
+
+              {ShowEditReviewForm && (
+                <EditReview productId={productId} reviewId={review._id} setShowEditReviewForm={setShowEditReviewForm} getReview={getReview} />
+              )}
+            </>
+          )}
                     </Card.Body>
                   </Card>
                 ))

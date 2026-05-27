@@ -34,7 +34,6 @@ function EditProduct() {
       const response = await service.get(
         `${import.meta.env.VITE_SERVER_URL}/api/product/${productId}`,
       );
-      console.log("access edit -> data ",response.data)
       setTitle(response.data.title);
       setDescription(response.data.description);
       setPrice(response.data.price);

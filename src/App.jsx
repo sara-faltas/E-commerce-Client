@@ -12,10 +12,10 @@ import Dashboard from "./pages/Admin/Dashboard";
 import AddProduct from "./pages/Admin/AddProduct"
 import EditProduct from "./pages/Admin/EditProduct";
 
-import UserProfile from "./pages/users/UserProfile"
-import AddReview from "./pages/users/AddReview"
-import EditReview from "./pages/users/EditReview"
-import Favorite from "./pages/users/Favorite"
+import UserProfile from "./pages/Users/UserProfile"
+import AddReview from "./pages/Users/AddReview"
+import EditReview from "./pages/Users/EditReview"
+import Favorite from "./pages/Users/Favorite"
 
 
 // components

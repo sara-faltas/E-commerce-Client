@@ -32,7 +32,6 @@ function ProductList() {
     try {
       const response = await service.get (`${import.meta.env.VITE_SERVER_URL}/api/product`)
       setProduct(response.data)
-      console.log(response.data)
     } catch (error) {
       console.log(error)
     }
