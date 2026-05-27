@@ -26,7 +26,6 @@ function AuthWrapper(props) {
     // call the backed
     try {
       const response = await service.get("/auth/verify");
-      console.log(response);
       //assume the token is valid
       setIsLoggedIn(true);
       setLoggedUserId(response.data.payload._id);

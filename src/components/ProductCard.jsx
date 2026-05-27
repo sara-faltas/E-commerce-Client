@@ -10,7 +10,6 @@ import backpack from "../images/backpack.webp";
 function ProductCard(props) {
     
    const navigate = useNavigate();
-   console.log(props.product)
 
   return (
 <div>
