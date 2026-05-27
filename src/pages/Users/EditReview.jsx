@@ -16,7 +16,7 @@ function EditReview(props) {
   const [reviewText, setReviewText] = useState("")
   const [rating, setRating]= useState("")
 
-  const {productId,setShowEditReviewForm,reviewId}= props
+  const {productId,setShowEditReviewForm,reviewId,getReview}= props
 
   const navigate = useNavigate();
 

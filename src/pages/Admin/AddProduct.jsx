@@ -37,7 +37,7 @@ function AddProduct() {
 
     try {
       const response = await service.post(
-        `${import.meta.env.VITE_SERVER_URL}/api/product/create`,
+        "/product/create",
         body,
       );
       navigate("/productList");

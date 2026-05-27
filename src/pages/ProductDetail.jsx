@@ -20,6 +20,7 @@ function ProductDetail() {
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeleteModalReview, setShowDeleteModalReview] = useState(false);
   const { isLoggedIn, loggedUserRole, loggedUserId } = useContext(AuthContext);
   const [reviews, setReviews] = useState([]);
   const [showReviews, setShowReviews] = useState(false);
@@ -54,6 +55,18 @@ function ProductDetail() {
       console.log(error);
     }
   };
+
+  const deleteReview = async (reviewId) => {
+    try {
+      const response = await service.delete(
+        `${import.meta.env.VITE_SERVER_URL}/api/review/delete/${reviewId}`,
+      );
+      getReview()
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   const getReview = async () => {
     try {
@@ -133,6 +146,52 @@ function ProductDetail() {
               )}
             </>
           )}
+          {isLoggedIn && loggedUserRole === "user" && (
+            <>
+              <button
+                style={{ margin: "0.5rem" }}
+                type="button"
+                className="btn btn-primary"
+                onClick={() => setShowDeleteModalReview(true)}
+              >
+                Delete review
+              </button>
+
+            </>
+          )}
+                    {/* **********handle the popup for deletion a review ******* */}
+          <Modal
+            show={showDeleteModalReview}
+            onHide={() => setShowDeleteModalReview(false)}
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Delete Review</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              Are you sure you want to delete this Review?
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button
+                variant="secondary"
+                onClick={() => setShowDeleteModaReview(false)}
+              >
+                Cancel
+              </Button>
+
+              <Button
+                variant="danger"
+                onClick={() => {
+                  setShowDeleteModalReview(false);
+                  deleteReview(review._id);
+                }}
+              >
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
                     </Card.Body>
                   </Card>
                 ))

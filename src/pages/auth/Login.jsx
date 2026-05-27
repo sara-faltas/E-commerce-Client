@@ -36,7 +36,7 @@ function Login() {
 
     try {
       const response = await service.post(
-        "http://localhost:5005/api/auth/login",
+        "/auth/login",
         body,
       );
       // we need to store our authToken that came from backend in local storage
