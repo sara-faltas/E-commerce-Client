@@ -90,7 +90,7 @@ function ProductDetail() {
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <Card.Img variant="top" src={product.image} />
+        <Card.Img style={{width:"30rem", height:"30rem"}}variant="top" src={product.image} />
         <Card.Body>
           <Card.Title>{product.title}</Card.Title>
           <Card.Text>{product.description}</Card.Text>
@@ -130,7 +130,7 @@ function ProductDetail() {
                         ))}
                       </div>
                       <Card.Text> {review.reviewText} </Card.Text>
-                       {isLoggedIn && loggedUserRole === "user" && (
+                       {isLoggedIn  && (
             <>
               <button
                 style={{ margin: "0.5rem" }}
@@ -146,7 +146,7 @@ function ProductDetail() {
               )}
             </>
           )}
-          {isLoggedIn && loggedUserRole === "user" && (
+          {isLoggedIn && (
             <>
               <button
                 style={{ margin: "0.5rem" }}
@@ -238,7 +238,7 @@ function ProductDetail() {
             </>
           )}
 
-          {isLoggedIn && loggedUserRole === "user" && (
+          {isLoggedIn  && (
             <>
               <button
                 style={{ margin: "0.5rem" }}

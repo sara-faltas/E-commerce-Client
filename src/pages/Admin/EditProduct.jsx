@@ -9,9 +9,8 @@ import { ToggleButton } from "react-bootstrap";
 import AddProduct from "./AddProduct";
 import ProductDetail from "../ProductDetail";
 
-
 function EditProduct() {
-   const { productId } = useParams();
+  const { productId } = useParams();
   const navigate = useNavigate();
 
   const [image, setImage] = useState("");
@@ -21,7 +20,7 @@ function EditProduct() {
   const [price, setPrice] = useState("");
   const [size, setSize] = useState("");
   const [stock, setStock] = useState("");
-  const [ edition, setEdition] = useState("")
+  const [edition, setEdition] = useState("");
 
   /*************************** */
   useEffect(() => {
@@ -40,9 +39,9 @@ function EditProduct() {
       setSize(response.data.size);
       setStock(response.data.stock);
       setCategory(response.data.category);
-      setImage(response.data.image)
-      setEdition(response.data.edition)
-    
+      setImage(response.data.image);
+      setEdition(response.data.edition);
+      setImageUrl(response.data.image);
     } catch (error) {
       console.log(error);
     }
@@ -54,14 +53,14 @@ function EditProduct() {
     e.preventDefault();
     // transfer data in the body
     const body = {
-      image:image,
+      image: imageUrl,
       title: title,
       description: description,
       category: category,
-      price:price,
-      size:size,
-      stock:stock,
-      edition:edition
+      price: price,
+      size: size,
+      stock: stock,
+      edition: edition,
     };
 
     try {
@@ -75,23 +74,68 @@ function EditProduct() {
     }
   };
 
-  
+  // handle update the photo
+  const [imageUrl, setImageUrl] = useState(null);
+  const [isUploading, setIsUploading] = useState(false); // for a loading animation effect
+
+  // below function should be the only function invoked when the file type input changes => onChange={handleFileUpload}
+  const handleFileUpload = async (event) => {
+    // console.log("The file to be uploaded is: ", e.target.files[0]);
+
+    if (!event.target.files[0]) {
+      // to prevent accidentally clicking the choose file button and not selecting a file
+      return;
+    }
+
+    setIsUploading(true); // to start the loading animation
+
+    const uploadData = new FormData(); // images and other files need to be sent to the backend in a FormData
+    uploadData.append("image", event.target.files[0]);
+    //             |
+    //     this name needs to match the name used in the middleware in the backend => uploader.single("image")
+
+    try {
+      const response = await service.post(
+        `${import.meta.env.VITE_SERVER_URL}/api/upload`,
+        uploadData,
+      );
+
+      setImageUrl(response.data.imageUrl);
+
+      //                          |
+      //     this is how the backend sends the image to the frontend => res.json({ imageUrl: req.file.path });
+
+      setIsUploading(false); // to stop the loading animation
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <h2 style={{ marginTop: "4rem", marginBottom: "2rem" }}>Edit Product</h2>
 
       <form style={{ margin: "2rem" }}>
-
         <InputGroup className="mb-2" style={{ marginTop: "2rem" }}>
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Upload Image 
-          </InputGroup.Text>
-          <Form.Control
-            aria-label="Default"
-            aria-describedby="inputGroup-sizing-default"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-          />
+          <Form.Group controlId="formFile" className="mb-3">
+            {/* <Form.Label>Upload image</Form.Label> */}
+            <Form.Control
+              aria-label="Default"
+              aria-describedby="inputGroup-sizing-default"
+              onChange={handleFileUpload}
+              disabled={isUploading}
+              type="file"
+            />
+          </Form.Group>
+          {/* to render a loading message or spinner while uploading the picture */}
+          {isUploading ? <h6>... uploading image</h6> : null}
+
+          {/* below line will render a preview of the image from cloudinary */}
+          {imageUrl ? (
+            <div>
+              <img src={imageUrl} alt="img" width={60} height={60} />
+            </div>
+          ) : null}
         </InputGroup>
 
         <InputGroup className="mb-4" style={{ marginTop: "2rem" }}>
@@ -117,7 +161,7 @@ function EditProduct() {
             onChange={(e) => setDescription(e.target.value)}
           />
         </InputGroup>
-   <InputGroup className="mb-4">
+        <InputGroup className="mb-4">
           <InputGroup.Text id="inputGroup-sizing-default">
             Price
           </InputGroup.Text>
@@ -129,7 +173,7 @@ function EditProduct() {
           />
         </InputGroup>
 
-         <InputGroup className="mb-4">
+        <InputGroup className="mb-4">
           <InputGroup.Text id="inputGroup-sizing-default">
             Stock
           </InputGroup.Text>
@@ -141,10 +185,8 @@ function EditProduct() {
           />
         </InputGroup>
 
-         <InputGroup className="mb-4">
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Size
-          </InputGroup.Text>
+        <InputGroup className="mb-4">
+          <InputGroup.Text id="inputGroup-sizing-default">Size</InputGroup.Text>
           <Form.Control
             aria-label="Default"
             aria-describedby="inputGroup-sizing-default"
@@ -153,7 +195,7 @@ function EditProduct() {
           />
         </InputGroup>
 
-         <Form.Select
+        <Form.Select
           className="mb-4"
           value={edition}
           onChange={(e) => setEdition(e.target.value)}
@@ -171,18 +213,14 @@ function EditProduct() {
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">Select Category </option>
-          <option value="Breakfast">Backbag</option>
-          <option value="Brunch">Hanbag</option>
-          <option value="Lunch">Travelbag</option>
-          <option value="Chicken">Maternitybag</option>
-          <option value="Beef">Menbag</option>
-          <option value="Seafood">Portmoney</option>
+          <option value="Backbag">Backbag</option>
+          <option value="Hanbag">Hanbag</option>
+          <option value="Travelbag">Travelbag</option>
+          <option value="Maternitybag">Maternitybag</option>
+          <option value="Menbag">Menbag</option>
+          <option value="poketmoney">poketmoney</option>
           <option value="Others">Others</option>
         </Form.Select>
-        
-
-
-       
 
         <button
           style={{ margin: " 1rem " }}
@@ -195,4 +233,4 @@ function EditProduct() {
     </div>
   );
 }
-export default EditProduct
+export default EditProduct;

@@ -193,12 +193,12 @@ function AddProduct() {
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">Select Category </option>
-          <option value="Breakfast">Backbag</option>
-          <option value="Brunch">Hanbag</option>
-          <option value="Lunch">Travelbag</option>
-          <option value="Chicken">Maternitybag</option>
-          <option value="Beef">Menbag</option>
-          <option value="Seafood">Portmoney</option>
+          <option value="Backbag">Backbag</option>
+          <option value="Hanbag">Hanbag</option>
+          <option value="Travelbag">Travelbag</option>
+          <option value="Maternitybag">Maternitybag</option>
+          <option value="Menbag">Menbag</option>
+          <option value="poketmoney">poketmoney</option>
           <option value="Others">Others</option>
         </Form.Select>
 

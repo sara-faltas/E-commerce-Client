@@ -22,7 +22,11 @@ function ProductCard(props) {
         }}
       >
         
-        <Card.Img variant="top" src={props.product.image} />
+        <Card.Img variant="top" src={props.product.image}  style={{
+          width: "16rem",
+          height: "14rem",
+          
+        }}/>
         
         <Card.Body>
           <Card.Title>{props.product.title}</Card.Title>
