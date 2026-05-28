@@ -44,7 +44,8 @@ function Signup() {
       if (error.response.status === 400) {
         setErrorMsg(error.response.data.errorMessage);
       } else {
-        // navigate to error page
+        console.log(error)
+        navigate("/error")
       }
     }
 

@@ -31,7 +31,8 @@ function ProductList() {
       );
       setProduct(response.data);
     } catch (error) {
-      console.log(error);
+      console.log(error)
+        navigate("/error")
     }
   };
 

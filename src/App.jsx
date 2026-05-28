@@ -1,6 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router";
 
+
 // pages
 import HomePage from "./pages/HomePage"
 import Login from "./pages/auth/Login"
@@ -16,6 +17,11 @@ import UserProfile from "./pages/Users/UserProfile"
 import AddReview from "./pages/Users/AddReview"
 import EditReview from "./pages/Users/EditReview"
 import Favorite from "./pages/Users/Favorite"
+
+import Error from "./pages/Error";
+import NotFoundPage from "./pages/NotFoundPage"
+
+import Footer from "./components/Footer";
 
 
 // components
@@ -50,9 +56,14 @@ function App() {
         <Route path="/editReview/:reviewId" element={<EditReview/>} />
         <Route path="/favorite" element={<Favorite/>}/>
 
+        <Route path="/error" element={<Error/>}/>
+        <Route path="*" element={<NotFoundPage/>}/>
+
 
 
       </Routes>
+
+       <Footer />
     </div>
   )
 }

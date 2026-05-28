@@ -9,12 +9,17 @@ import NavbarToggle from "react-bootstrap/NavbarToggle";
 import { Button } from "bootstrap";
 import { Navigate } from "react-router-dom";
 
-import logo from "../images/logobags.avif"
+import logo from "../images/authenticLogo.png";
 
 function MyNavbar() {
   // import the state from the context
-  const { setIsLoggedIn, setLoggedUserId, isLoggedIn , loggedUserRole, setLoggedUserRole } =
-    useContext(AuthContext);
+  const {
+    setIsLoggedIn,
+    setLoggedUserId,
+    isLoggedIn,
+    loggedUserRole,
+    setLoggedUserRole,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -30,33 +35,39 @@ function MyNavbar() {
   }
 
   return (
-    <Navbar expand="sm" className="bg-body-tertiary">
-      <Container>
+    <Navbar expand="sm" className="py-1" style={{ backgroundColor: "white" }}>
+      <Container fluid>
         <Navbar.Brand as={Link} to="/">
-           <img
-              alt=""
-              src={logo}
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-            />{' '}
-            MyShop
+          <img
+            alt="authentic bags logo"
+            src={logo}
+            className="navbar-brand"
+            width={120}
+            height={120}
+          />
         </Navbar.Brand>
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/productList">
               Products
             </Nav.Link>
-
+         </Nav>
+         <Nav className="ms-auto">
             {!isLoggedIn && (
               <>
-                 <Nav.Link as={Link} to="/signup">
-                    SignUp
-                  </Nav.Link>
-                 <Nav.Link as={Link} to="/login">
-                    Login
-                  </Nav.Link>
+                <Nav.Link as={Link} to="/signup">
+                  SignUp
+                </Nav.Link>
+                <Nav.Link as={Link} to="/login">
+                  Login
+                </Nav.Link>
+                 
+                    {/* <Nav.Link as={Link} to="/userProfile">
+                    🛒
+                  </Nav.Link> */}
               </>
             )}
             {isLoggedIn && (
@@ -65,15 +76,19 @@ function MyNavbar() {
                   <Nav.Link as={Link} to="/dashboard">
                     Dashboard
                   </Nav.Link>
+                  
                 ) : (
                   <Nav.Link as={Link} to="/userProfile">
-                    Profile
+                    Profile 
                   </Nav.Link>
+                  
                 )}
-                <button onClick={handleLogout}>
-               
+                 <Nav.Link as={Link} to="/Favorite">
+                    ❤️
+                  </Nav.Link>
+                <Nav.Link onClick={handleLogout} style={{ cursor: "pointer" }}>
                   Logout
-                </button>
+                </Nav.Link>
               </>
             )}
           </Nav>

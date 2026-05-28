@@ -12,6 +12,8 @@ import { AuthContext } from "../context/auth.context";
 import Accordion from "react-bootstrap/Accordion";
 import AddReview from "./Users/AddReview";
 import EditReview from "./Users/EditReview";
+import { Spinner } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import backpack from "../images/backpack.webp";
 
@@ -25,11 +27,23 @@ function ProductDetail() {
   const [reviews, setReviews] = useState([]);
   const [showReviews, setShowReviews] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
-  const [ShowEditReviewForm, setShowEditReviewForm]= useState(false)
+  const [ShowEditReviewForm, setShowEditReviewForm] = useState(false);
+
+ 
+  const [favorites, setFavorites] = useState([]);
+
+
 
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+  getFavorites();
+}, []);
+
+ const isFav = favorites.some(
+       (product) => product._id === productId);
 
   // function to get product details from the database
   const getData = async () => {
@@ -39,11 +53,40 @@ function ProductDetail() {
       );
       setProduct(response.data);
     } catch (error) {
-      console.error(error);
+      console.log(error)
+        navigate("/error")
     }
   };
 
-  if (!product) return <h3>Loading...</h3>;
+  const getFavorites = async () => {
+  try {
+    const response = await service.get(
+      `${import.meta.env.VITE_SERVER_URL}/api/favorite`
+    );
+
+    setFavorites(response.data); // array of products
+   
+  } catch (error) {
+    console.log(error);
+    navigate("/error")
+  }
+}; 
+
+   
+
+  if (!product)
+    return (
+      <Button disabled>
+        <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+        />{" "}
+        Loading...
+      </Button>
+    );
 
   const deleteProduct = async () => {
     try {
@@ -52,7 +95,8 @@ function ProductDetail() {
       );
       navigate("/productList");
     } catch (error) {
-      console.log(error);
+      console.log(error)
+        navigate("/error")
     }
   };
 
@@ -61,12 +105,12 @@ function ProductDetail() {
       const response = await service.delete(
         `${import.meta.env.VITE_SERVER_URL}/api/review/delete/${reviewId}`,
       );
-      getReview()
+      getReview();
     } catch (error) {
-      console.log(error);
+      console.log(error)
+        navigate("/error")
     }
   };
-
 
   const getReview = async () => {
     try {
@@ -76,11 +120,24 @@ function ProductDetail() {
       setShowReviews(true);
       setReviews(response.data);
     } catch (error) {
-      console.log(error);
+     console.log(error)
+        navigate("/error")
     }
   };
 
- 
+  const handleFavorite = async () => {
+    try {
+      await service.put(
+        `${import.meta.env.VITE_SERVER_URL}/api/favorite/${productId}`,
+      );
+      //refresh favorites after cheange
+      getFavorites();
+    } catch (error) {
+      console.log(error)
+        navigate("/error")
+    }
+  };
+
   return (
     <div>
       <Card
@@ -90,8 +147,23 @@ function ProductDetail() {
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <Card.Img style={{width:"30rem", height:"30rem"}}variant="top" src={product.image} />
+        <Card.Img
+          style={{ width: "30rem", height: "30rem" }}
+          variant="top"
+          src={product.image}
+        />
         <Card.Body>
+          <button
+            onClick={handleFavorite}
+            style={{
+              background: "none",
+              border: "none",
+              fontSize: "24px",
+              cursor: "pointer",
+            }}
+          >
+            {isFav ? "❤️" : "🤍"}
+          </button>
           <Card.Title>{product.title}</Card.Title>
           <Card.Text>{product.description}</Card.Text>
         </Card.Body>
@@ -130,68 +202,72 @@ function ProductDetail() {
                         ))}
                       </div>
                       <Card.Text> {review.reviewText} </Card.Text>
-                       {isLoggedIn  && (
-            <>
-              <button
-                style={{ margin: "0.5rem" }}
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setShowEditReviewForm(true)}
-              >
-                Edit review
-              </button>
+                      {isLoggedIn && (
+                        <>
+                          <button
+                            style={{ margin: "0.5rem" }}
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={() => setShowEditReviewForm(true)}
+                          >
+                            Edit review
+                          </button>
 
-              {ShowEditReviewForm && (
-                <EditReview productId={productId} reviewId={review._id} setShowEditReviewForm={setShowEditReviewForm} getReview={getReview} />
-              )}
-            </>
-          )}
-          {isLoggedIn && (
-            <>
-              <button
-                style={{ margin: "0.5rem" }}
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setShowDeleteModalReview(true)}
-              >
-                Delete review
-              </button>
+                          {ShowEditReviewForm && (
+                            <EditReview
+                              productId={productId}
+                              reviewId={review._id}
+                              setShowEditReviewForm={setShowEditReviewForm}
+                              getReview={getReview}
+                            />
+                          )}
+                        </>
+                      )}
+                      {isLoggedIn && (
+                        <>
+                          <button
+                            style={{ margin: "0.5rem" }}
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={() => setShowDeleteModalReview(true)}
+                          >
+                            Delete review
+                          </button>
+                        </>
+                      )}
+                      {/* **********handle the popup for deletion a review ******* */}
+                      <Modal
+                        show={showDeleteModalReview}
+                        onHide={() => setShowDeleteModalReview(false)}
+                        centered
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title>Delete Review</Modal.Title>
+                        </Modal.Header>
 
-            </>
-          )}
-                    {/* **********handle the popup for deletion a review ******* */}
-          <Modal
-            show={showDeleteModalReview}
-            onHide={() => setShowDeleteModalReview(false)}
-            centered
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Delete Review</Modal.Title>
-            </Modal.Header>
+                        <Modal.Body>
+                          Are you sure you want to delete this Review?
+                        </Modal.Body>
 
-            <Modal.Body>
-              Are you sure you want to delete this Review?
-            </Modal.Body>
+                        <Modal.Footer>
+                          <Button
+                            variant="secondary"
+                            onClick={() => setShowDeleteModaReview(false)}
+                          >
+                            Cancel
+                          </Button>
 
-            <Modal.Footer>
-              <Button
-                variant="secondary"
-                onClick={() => setShowDeleteModaReview(false)}
-              >
-                Cancel
-              </Button>
-
-              <Button
-                variant="danger"
-                onClick={() => {
-                  setShowDeleteModalReview(false);
-                  deleteReview(review._id);
-                }}
-              >
-                Delete
-              </Button>
-            </Modal.Footer>
-          </Modal>
+                          <Button
+                            variant="danger"
+                            onClick={() => {
+                              setShowDeleteModalReview(false);
+                              deleteReview(review._id);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
                     </Card.Body>
                   </Card>
                 ))
@@ -238,7 +314,7 @@ function ProductDetail() {
             </>
           )}
 
-          {isLoggedIn  && (
+          {isLoggedIn && (
             <>
               <button
                 style={{ margin: "0.5rem" }}
@@ -250,7 +326,11 @@ function ProductDetail() {
               </button>
 
               {showReviewForm && (
-                <AddReview productId={productId} setShowReviewForm={setShowReviewForm} getReview={getReview} />
+                <AddReview
+                  productId={productId}
+                  setShowReviewForm={setShowReviewForm}
+                  getReview={getReview}
+                />
               )}
             </>
           )}

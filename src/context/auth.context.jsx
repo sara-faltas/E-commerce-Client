@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import service from "../services/index.services";
 
 
+
 // we creating the component
 const AuthContext = createContext();
 
 function AuthWrapper(props) {
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedUserId, setLoggedUserId] = useState(null);
   const [isAuthenticating, setIsAuthenticating]=useState(true)
@@ -30,10 +32,10 @@ function AuthWrapper(props) {
       setIsLoggedIn(true);
       setLoggedUserId(response.data.payload._id);
       setLoggedUserRole(response.data.payload.role)
-
       setIsAuthenticating(false)
     } catch (error) {
-      console.log(error);
+      console.log(error)
+     
       //assume the token is NOT valid
       setIsLoggedIn(false);
       setLoggedUserId(null);

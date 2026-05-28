@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
 import { ToggleButton } from "react-bootstrap";
 import service from "../../services/index.services";
+import { Navigate } from "react-router-dom";
 
 function AddProduct() {
   const [image, setImage] = useState("");
@@ -36,13 +37,11 @@ function AddProduct() {
     };
 
     try {
-      const response = await service.post(
-        "/product/create",
-        body,
-      );
+      const response = await service.post("/product/create", body);
       navigate("/productList");
     } catch (error) {
-      console.log(error);
+      console.log(error)
+        navigate("/error")
     }
   };
 
@@ -76,13 +75,13 @@ function AddProduct() {
       );
 
       setImageUrl(response.data.imageUrl);
-      
+
       //                          |
       //     this is how the backend sends the image to the frontend => res.json({ imageUrl: req.file.path });
 
       setIsUploading(false); // to stop the loading animation
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -92,8 +91,7 @@ function AddProduct() {
         Add New Product
       </h3>
 
-      <form style={{ margin: "2rem" }}>
-
+      <form onSubmit={handleSubmit} style={{ margin: "2rem" }}>
         <InputGroup className="mb-2" style={{ marginTop: "2rem" }}>
           <Form.Group controlId="formFile" className="mb-3">
             {/* <Form.Label>Upload image</Form.Label> */}
@@ -111,8 +109,8 @@ function AddProduct() {
 
           {/* below line will render a preview of the image from cloudinary */}
           {imageUrl ? (
-            <div >
-              <img src={imageUrl} alt="img" width={60} height={60}/>
+            <div>
+              <img src={imageUrl} alt="img" width={60} height={60} />
             </div>
           ) : null}
         </InputGroup>
@@ -126,6 +124,8 @@ function AddProduct() {
             aria-describedby="inputGroup-sizing-default"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            required
+            type="text"
           />
         </InputGroup>
 
@@ -150,6 +150,8 @@ function AddProduct() {
             aria-describedby="inputGroup-sizing-default"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            required
+            type="text"
           />
         </InputGroup>
 
@@ -204,9 +206,8 @@ function AddProduct() {
 
         <button
           style={{ margin: "1rem" }}
-          type="button"
+          type="submit"
           className="btn btn-primary"
-          onClick={handleSubmit}
         >
           Add Product
         </button>

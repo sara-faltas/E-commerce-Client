@@ -5,6 +5,7 @@ import service from "../../services/index.services";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import { ToggleButton } from "react-bootstrap";
+import { Navigate } from "react-router-dom";
 
 import AddProduct from "./AddProduct";
 import ProductDetail from "../ProductDetail";
@@ -43,7 +44,8 @@ function EditProduct() {
       setEdition(response.data.edition);
       setImageUrl(response.data.image);
     } catch (error) {
-      console.log(error);
+      console.log(error)
+        navigate("/error")
     }
   };
 
@@ -70,7 +72,8 @@ function EditProduct() {
       );
       navigate("/product/" + productId);
     } catch (error) {
-      console.log(error);
+      console.log(error)
+        navigate("/error")
     }
   };
 
@@ -107,7 +110,8 @@ function EditProduct() {
 
       setIsUploading(false); // to stop the loading animation
     } catch (error) {
-      console.log(error);
+     console.log(error)
+        navigate("/error")
     }
   };
 
@@ -115,7 +119,8 @@ function EditProduct() {
     <div>
       <h2 style={{ marginTop: "4rem", marginBottom: "2rem" }}>Edit Product</h2>
 
-      <form style={{ margin: "2rem" }}>
+      <form onSubmit={handleFormSubmit}style={{ margin: "2rem" }}>
+        
         <InputGroup className="mb-2" style={{ marginTop: "2rem" }}>
           <Form.Group controlId="formFile" className="mb-3">
             {/* <Form.Label>Upload image</Form.Label> */}
@@ -147,6 +152,7 @@ function EditProduct() {
             aria-describedby="inputGroup-sizing-default"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            required
           />
         </InputGroup>
 
@@ -170,8 +176,10 @@ function EditProduct() {
             aria-describedby="inputGroup-sizing-default"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            required
+            type="number"
           />
-        </InputGroup>
+        </InputGroup> $
 
         <InputGroup className="mb-4">
           <InputGroup.Text id="inputGroup-sizing-default">
@@ -225,7 +233,7 @@ function EditProduct() {
         <button
           style={{ margin: " 1rem " }}
           className="btn btn-primary"
-          onClick={handleFormSubmit}
+          type="submit"
         >
           Save
         </button>

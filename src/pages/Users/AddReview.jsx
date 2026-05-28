@@ -35,6 +35,7 @@ function AddReview(props) {
       getReview()
       } catch (error) {
         console.log(error)
+        navigate("/error")
       }
     }
     
@@ -44,7 +45,7 @@ function AddReview(props) {
       <h3 style={{ marginTop: "4rem", marginBottom: "2rem" }}>
       Add Review
       </h3>
-      <form style={{ margin: "2rem" }}>
+      <form onSubmit={handleSubmit} style={{ margin: "2rem" }}>
          
         <InputGroup className="mb-4">
           <InputGroup.Text id="inputGroup-sizing-default" required>
@@ -55,6 +56,7 @@ function AddReview(props) {
             aria-describedby="inputGroup-sizing-default"
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
+            required
           />
         </InputGroup>
         
@@ -68,15 +70,15 @@ function AddReview(props) {
             aria-describedby="inputGroup-sizing-default"
             value={rating}
             onChange={(e) => setRating(e.target.value)}
+            type="number"
           />
         </InputGroup>
       
 
         <button
           style={{ margin: "1rem" }}
-          type="button"
+          type="submit"
           className="btn btn-primary"
-          onClick={handleSubmit}
         >
           Post your review
         </button>
