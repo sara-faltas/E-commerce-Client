@@ -19,6 +19,8 @@ function ProductList() {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [category, setCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState("")
+
 
   useEffect(() => {
     getData();
@@ -53,15 +55,31 @@ function ProductList() {
     );
   }
 
-  //this to filter product by category
-  const filterCategory = product.filter((product) => {
+  // this to search for product name from the product list page
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value)
+  }
+
+  const filteredProduct = product.filter((product) => {
+    return product.title.toLowerCase().includes(searchQuery.toLowerCase())
+  })
+
+   //this to filter product by category
+  const filterCategory = filteredProduct.filter((product) => {
     return category ? product.category === category : true;
   });
 
   return (
     <div>
       <h2 style={{ marginTop: "2rem", marginBottom: "2rem" }}>Product List</h2>
-
+      <div className="d-flex gap-3 mb-4 flex-wrap">
+        <Form.Control
+          type="text"
+          placeholder="Search by product name"
+          value={searchQuery}
+          onChange={handleSearch}
+        />
+      </div>
       <div className="d-flex gap-3 mb-4 flex-wrap">
         <Form.Select onChange={(e) => setCategory(e.target.value)}>
           <option value="">Filter by category </option>

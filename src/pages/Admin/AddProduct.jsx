@@ -19,6 +19,7 @@ function AddProduct() {
   const [size, setSize] = useState("");
   const [stock, setStock] = useState("");
   const [edition, setEdition] = useState("");
+  const [material, setMaterial] = useState("");
 
   const navigate = useNavigate();
 
@@ -34,6 +35,7 @@ function AddProduct() {
       size: size,
       stock: stock,
       edition: edition,
+      material: material
     };
 
     try {
@@ -138,6 +140,8 @@ function AddProduct() {
             aria-describedby="inputGroup-sizing-default"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+           required
+            type="text"
           />
         </InputGroup>
 
@@ -152,6 +156,18 @@ function AddProduct() {
             onChange={(e) => setPrice(e.target.value)}
             required
             type="text"
+          />
+        </InputGroup>
+
+         <InputGroup className="mb-4">
+          <InputGroup.Text id="inputGroup-sizing-default">
+            Material
+          </InputGroup.Text>
+          <Form.Control
+            aria-label="Default"
+            aria-describedby="inputGroup-sizing-default"
+            value={material}
+            onChange={(e) => setMaterial(e.target.value)}
           />
         </InputGroup>
 
@@ -188,6 +204,8 @@ function AddProduct() {
           <option value="limited">limited collection</option>
           <option value="sale">sale</option>
         </Form.Select>
+
+      
 
         <Form.Select
           className="mb-4"

@@ -29,21 +29,13 @@ function ProductDetail() {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [ShowEditReviewForm, setShowEditReviewForm] = useState(false);
 
- 
   const [favorites, setFavorites] = useState([]);
-
-
 
   useEffect(() => {
     getData();
   }, []);
 
-  useEffect(() => {
-  getFavorites();
-}, []);
-
- const isFav = favorites.some(
-       (product) => product._id === productId);
+  const isFav = favorites.some((product) => product._id === productId);
 
   // function to get product details from the database
   const getData = async () => {
@@ -53,26 +45,23 @@ function ProductDetail() {
       );
       setProduct(response.data);
     } catch (error) {
-      console.log(error)
-        navigate("/error")
+      console.log(error);
+      navigate("/error");
     }
   };
 
   const getFavorites = async () => {
-  try {
-    const response = await service.get(
-      `${import.meta.env.VITE_SERVER_URL}/api/favorite`
-    );
+    try {
+      const response = await service.get(
+        `${import.meta.env.VITE_SERVER_URL}/api/favorite`,
+      );
 
-    setFavorites(response.data); // array of products
-   
-  } catch (error) {
-    console.log(error);
-    navigate("/error")
-  }
-}; 
-
-   
+      setFavorites(response.data); // array of products
+    } catch (error) {
+      console.log(error);
+      navigate("/error");
+    }
+  };
 
   if (!product)
     return (
@@ -95,8 +84,8 @@ function ProductDetail() {
       );
       navigate("/productList");
     } catch (error) {
-      console.log(error)
-        navigate("/error")
+      console.log(error);
+      navigate("/error");
     }
   };
 
@@ -107,8 +96,8 @@ function ProductDetail() {
       );
       getReview();
     } catch (error) {
-      console.log(error)
-        navigate("/error")
+      console.log(error);
+      navigate("/error");
     }
   };
 
@@ -120,8 +109,8 @@ function ProductDetail() {
       setShowReviews(true);
       setReviews(response.data);
     } catch (error) {
-     console.log(error)
-        navigate("/error")
+      console.log(error);
+      navigate("/error");
     }
   };
 
@@ -133,8 +122,8 @@ function ProductDetail() {
       //refresh favorites after cheange
       getFavorites();
     } catch (error) {
-      console.log(error)
-        navigate("/error")
+      console.log(error);
+      navigate("/error");
     }
   };
 
@@ -153,17 +142,21 @@ function ProductDetail() {
           src={product.image}
         />
         <Card.Body>
-          <button
-            onClick={handleFavorite}
-            style={{
-              background: "none",
-              border: "none",
-              fontSize: "24px",
-              cursor: "pointer",
-            }}
-          >
-            {isFav ? "❤️" : "🤍"}
-          </button>
+          {isLoggedIn && (
+            <>
+              <button
+                onClick={handleFavorite}
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: "24px",
+                  cursor: "pointer",
+                }}
+              >
+                {isFav ? "❤️" : "🤍"}
+              </button>
+            </>
+          )}
           <Card.Title>{product.title}</Card.Title>
           <Card.Text>{product.description}</Card.Text>
         </Card.Body>
@@ -171,13 +164,14 @@ function ProductDetail() {
         <ListGroup.Item
           style={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
             justifyContent: "space-evenly",
           }}
         >
-          <ListGroup.Item>Price: {product.price}</ListGroup.Item>
+          <ListGroup.Item>Price: {product.price}€</ListGroup.Item>
           <ListGroup.Item>Category: {product.category}</ListGroup.Item>
-          <ListGroup.Item>Size: {product.size}</ListGroup.Item>
+          <ListGroup.Item>Size: {product.size}cm</ListGroup.Item>
+          <ListGroup.Item>Material: {product.material}</ListGroup.Item>
         </ListGroup.Item>
 
         {/* // show review section  */}
@@ -202,39 +196,43 @@ function ProductDetail() {
                         ))}
                       </div>
                       <Card.Text> {review.reviewText} </Card.Text>
-                      {isLoggedIn && (
-                        <>
-                          <button
-                            style={{ margin: "0.5rem" }}
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={() => setShowEditReviewForm(true)}
-                          >
-                            Edit review
-                          </button>
+                      {isLoggedIn &&
+                        (loggedUserId === review.user?._id ||
+                          loggedUserRole === "admin") && (
+                          <>
+                            <button
+                              style={{ margin: "0.5rem" }}
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={() => setShowEditReviewForm(true)}
+                            >
+                              Edit review
+                            </button>
 
-                          {ShowEditReviewForm && (
-                            <EditReview
-                              productId={productId}
-                              reviewId={review._id}
-                              setShowEditReviewForm={setShowEditReviewForm}
-                              getReview={getReview}
-                            />
-                          )}
-                        </>
-                      )}
-                      {isLoggedIn && (
-                        <>
-                          <button
-                            style={{ margin: "0.5rem" }}
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={() => setShowDeleteModalReview(true)}
-                          >
-                            Delete review
-                          </button>
-                        </>
-                      )}
+                            {ShowEditReviewForm && (
+                              <EditReview
+                                productId={productId}
+                                reviewId={review._id}
+                                setShowEditReviewForm={setShowEditReviewForm}
+                                getReview={getReview}
+                              />
+                            )}
+                          </>
+                        )}
+                       {isLoggedIn &&
+                        (loggedUserId === review.user?._id ||
+                          loggedUserRole === "admin") && (
+                          <>
+                            <button
+                              style={{ margin: "0.5rem" }}
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={() => setShowDeleteModalReview(true)}
+                            >
+                              Delete review
+                            </button>
+                          </>
+                        )}
                       {/* **********handle the popup for deletion a review ******* */}
                       <Modal
                         show={showDeleteModalReview}
