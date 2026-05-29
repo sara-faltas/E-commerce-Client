@@ -36,21 +36,49 @@ function MyNavbar() {
   }
 
   return (
-    <Navbar expand="sm" className="py-0" style={{ backgroundColor: "white" ,height: "60px" }}>
+    <Navbar
+      expand="sm"
+      className="py-0"
+      style={{
+        backgroundColor: "white",
+        height: "50px",
+        position: "sticky",
+        top: 0,
+        zIndex: 1055,
+        overflow: "visible",
+      }}
+    >
       <Container fluid>
         <Navbar.Brand as={Link} to="/">
           <img
             alt="authentic bags logo"
             src={logo}
             className="navbar-brand"
-            width={120}
-            height={120}
+            width={140}
+            height={80}
           />
         </Navbar.Brand>
 
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle
+          aria-controls="basic-navbar-nav"
+          style={{
+            backgroundColor: "white",
+            borderRadius: "10px",
+            width: "auto",
+            padding: "0.35rem 0.5rem",
+            marginLeft: "auto",
+          }}
+        />
 
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse
+          id="basic-navbar-nav"
+          style={{
+            zIndex: 1060,
+            backgroundColor: "white",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
+            borderRadius: "0 0 12px 12px",
+          }}
+        >
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/productList">
               Products
@@ -62,7 +90,18 @@ function MyNavbar() {
                 {/* <Nav.Link as={Link} to="/signup">
                   SignUp
                 </Nav.Link> */}
-                <Nav.Link as={Link} to="/login" style={{fontSize: "1.4rem",display: "flex",alignItems: "center",color: "#8B6B4A",}}> 
+                <Nav.Link
+                  as={Link}
+                  to="/login"
+                  style={{
+                    fontSize: "1.2rem",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    color: "#8B6B4A",
+                    width: "auto",
+                    margin: "0 0.25rem",
+                  }}
+                >
                   <FiUser />
                 </Nav.Link>
                  
@@ -84,7 +123,7 @@ function MyNavbar() {
                   </Nav.Link>
                   
                 )}
-                 <Nav.Link as={Link} to="/">
+                 <Nav.Link as={Link} to="/Favorite">
                     ❤️
                   </Nav.Link>
                 <Nav.Link onClick={handleLogout} style={{ cursor: "pointer" }}>
