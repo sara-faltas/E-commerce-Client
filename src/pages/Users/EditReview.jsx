@@ -58,9 +58,9 @@ function EditReview(props) {
     }
 
   return (
-   <div>
+   <div className="container text-center d-flex flex-row justify-content-center align-items-center" >
       <h3 style={{ marginTop: "4rem", marginBottom: "2rem" }}>
-      Edit Review
+      Edit
       </h3>
       <form onSubmit={handleSubmit} style={{ margin: "2rem" }}>
          
@@ -97,7 +97,7 @@ function EditReview(props) {
           type="submit"
           className="btn btn-primary"
         >
-          Update your review
+          Done
         </button>
       </form>
 

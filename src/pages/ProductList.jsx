@@ -14,13 +14,13 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
+import { FiSearch } from "react-icons/fi";
 
 function ProductList() {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [category, setCategory] = useState("");
-  const [searchQuery, setSearchQuery] = useState("")
-
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     getData();
@@ -33,8 +33,8 @@ function ProductList() {
       );
       setProduct(response.data);
     } catch (error) {
-      console.log(error)
-        navigate("/error")
+      console.log(error);
+      navigate("/error");
     }
   };
 
@@ -57,30 +57,63 @@ function ProductList() {
 
   // this to search for product name from the product list page
   const handleSearch = (e) => {
-    setSearchQuery(e.target.value)
-  }
+    setSearchQuery(e.target.value);
+  };
 
   const filteredProduct = product.filter((product) => {
-    return product.title.toLowerCase().includes(searchQuery.toLowerCase())
-  })
+    return product.title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
-   //this to filter product by category
+  //this to filter product by category
   const filterCategory = filteredProduct.filter((product) => {
     return category ? product.category === category : true;
   });
 
   return (
-    <div>
-      <h2 style={{ marginTop: "2rem", marginBottom: "2rem" }}>Product List</h2>
-      <div className="d-flex gap-3 mb-4 flex-wrap">
+    <div >
+     
+        {/* TITLE */}
+      <h2 className="d-flex justify-content-center " style={{  margin: 0,fontWeight: "400" }}>NEW ARRIVALS</h2>
+  
+            {/* RIGHT SIDE */}
+      <div className="d-flex justify-content-end align-items-center">
+        {/* SEARCH BAR */}
+         <div
+      style={{
+        position: "relative",
+        width: "250px",
+        margin: "1rem",
+      }}
+    >
         <Form.Control
           type="text"
           placeholder="Search by product name"
           value={searchQuery}
           onChange={handleSearch}
+          style={{
+            paddingLeft: "40px",
+            borderRadius: "30px",
+            border: "1px solid #ddd",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+            transition: "0.3s",
+            fontSize: "0.95rem",
+          }}
+          onFocus={(e) => {
+            e.target.style.boxShadow = "0 4px 12px rgba(0,0,0,0.12)";
+            e.target.style.transform = "scale(1.02)";
+          }}
+          onBlur={(e) => {
+            e.target.style.boxShadow = "0 2px 6px rgba(0,0,0,0.05)";
+            e.target.style.transform = "scale(1)";
+          }}
         />
+       
       </div>
-      <div className="d-flex gap-3 mb-4 flex-wrap">
+     </div>
+     
+     <div className="d-flex  justify-content-end">
+      {/* FILTER */}
+      <div className="d-flex gap-3 mb-4 flex-wrap " style={{margin: "1rem",gap: "1rem",alignItems: "center",width: "250px"}}>
         <Form.Select onChange={(e) => setCategory(e.target.value)}>
           <option value="">Filter by category </option>
           <option value="Backbag">Backbag</option>
@@ -92,7 +125,10 @@ function ProductList() {
           <option value="Others">Others</option>
         </Form.Select>
       </div>
+ </div>
 
+
+    {/* cards section */}
       <div
         style={{
           display: "flex",
@@ -110,8 +146,10 @@ function ProductList() {
             <ProductCard key={product._id} product={product} />
           ))
         )}
-      </div>
+      
     </div>
+    </div>
+    
   );
 }
 

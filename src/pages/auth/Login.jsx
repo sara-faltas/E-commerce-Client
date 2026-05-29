@@ -7,6 +7,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
 import { ToggleButton } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
@@ -16,7 +17,8 @@ import service from "../../services/index.services";
 
 
 function Login() {
-  const { setIsLoggedIn, setLoggedUserId, setLoggedUserRole } = useContext(AuthContext);
+  const { setIsLoggedIn, setLoggedUserId, setLoggedUserRole } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,10 +37,7 @@ function Login() {
     };
 
     try {
-      const response = await service.post(
-        "/auth/login",
-        body,
-      );
+      const response = await service.post("/auth/login", body);
       // we need to store our authToken that came from backend in local storage
       localStorage.setItem("authToken", response.data.authToken);
 
@@ -54,21 +53,20 @@ function Login() {
       if (error.response.status === 400) {
         setErrorMsg(error.response.data.errorMessage);
       } else {
-        console.log(error)
-        navigate("/error")
+        console.log(error);
+        navigate("/error");
       }
       // ... contact backend to validate user credentials
     }
   };
   return (
-<div>
-      <h3 style={{ marginTop: "4rem", marginBottom: "2rem" }}>
-        Login
-      </h3>
-
+    <div>
+      <h3 style={{ marginTop: "4rem", marginBottom: "2rem" }}>LOGIN</h3>
+      <h6 style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+        Enter your email and password to login:
+      </h6>
       <form style={{ margin: "2rem" }}>
-       
-       <InputGroup className="mb-4">
+        <InputGroup className="mb-4">
           <InputGroup.Text id="inputGroup-sizing-default">
             Email
           </InputGroup.Text>
@@ -82,7 +80,7 @@ function Login() {
           />
         </InputGroup>
 
-          <InputGroup className="mb-4">
+        <InputGroup className="mb-4">
           <InputGroup.Text id="inputGroup-sizing-default">
             Password
           </InputGroup.Text>
@@ -95,14 +93,39 @@ function Login() {
             type="password"
           />
         </InputGroup>
-          
 
-          <button onClick={handleLogin} >
-            Login
-          </button>
-          {errorMsg && <p>{errorMsg}</p>}
-        </form>
-   </div>
+        <button
+          onClick={handleLogin}
+          style={{
+            width: "100%",
+            marginTop: "1rem",
+            backgroundColor: "#dfa871",
+            border: "none",
+            borderRadius: "10px",
+            padding: "0.7rem",
+            transition: "0.3s",
+          }}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = "#ae8a64")}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = "#dfa871")}
+        >
+          LOGIN
+        </button>
+        {errorMsg && <p>{errorMsg}</p>}
+      </form>
+      <p style={{ marginTop: "1rem" }}>
+        Don't have an account?{" "}
+        <Link
+          to="/signup"
+          style={{
+            textDecoration: "none",
+            color: "#8B6B4A",
+            fontWeight: "500",
+          }}
+        >
+          Sign Up
+        </Link>
+      </p>
+    </div>
   );
 }
 

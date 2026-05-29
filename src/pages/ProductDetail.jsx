@@ -14,6 +14,7 @@ import AddReview from "./Users/AddReview";
 import EditReview from "./Users/EditReview";
 import { Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { FiArrowLeft, FiEdit2, FiTrash2 } from "react-icons/fi";
 
 import backpack from "../images/backpack.webp";
 
@@ -134,51 +135,88 @@ function ProductDetail() {
           width: "30rem",
           margin: "2rem auto",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          position: "relative",
         }}
       >
+        {isLoggedIn && (
+          <>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleFavorite();
+              }}
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                zIndex: 10,
+                background: "white",
+                border: "none",
+                borderRadius: "50%",
+                width: "40px",
+                height: "40px",
+                cursor: "pointer",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+                fontSize: "20px",
+              }}
+            >
+              {isFav ? "❤️" : "🤍"}
+            </button>
+          </>
+        )}
+
         <Card.Img
           style={{ width: "30rem", height: "30rem" }}
           variant="top"
           src={product.image}
+          alt={product.title}
         />
-        <Card.Body>
-          {isLoggedIn && (
-            <>
-              <button
-                onClick={handleFavorite}
-                style={{
-                  background: "none",
-                  border: "none",
-                  fontSize: "24px",
-                  cursor: "pointer",
-                }}
-              >
-                {isFav ? "❤️" : "🤍"}
-              </button>
-            </>
-          )}
-          <Card.Title>{product.title}</Card.Title>
-          <Card.Text>{product.description}</Card.Text>
+
+        <Card.Body style={{ textAlign: "left" }}>
+          <Card.Title
+            style={{
+              fontSize: "2rem",
+              fontWeight: "500",
+              marginBottom: "0.5rem",
+            }}
+          >
+            {product.title}
+          </Card.Title>
+          <Card.Text
+            style={{ color: "#777", fontSize: "1rem", marginBottom: "0.4rem" }}
+          >
+            {product.description}
+          </Card.Text>
+          <Card.Text
+            style={{ color: "#777", fontSize: "1rem", marginBottom: "0.4rem" }}
+          >
+            {product.price} € tax incl.
+          </Card.Text>
         </Card.Body>
 
         <ListGroup.Item
           style={{
+            color: "#777",
+            fontSize: "1rem",
+            marginBottom: "0.4rem",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-evenly",
+            textAlign: "left",
+            padding: "1rem",
           }}
         >
-          <ListGroup.Item>Price: {product.price}€</ListGroup.Item>
-          <ListGroup.Item>Category: {product.category}</ListGroup.Item>
-          <ListGroup.Item>Size: {product.size}cm</ListGroup.Item>
-          <ListGroup.Item>Material: {product.material}</ListGroup.Item>
+          <ListGroup.Item> {product.category}</ListGroup.Item>
+          <ListGroup.Item>Size of {product.size} cm</ListGroup.Item>
+          <ListGroup.Item>Made of {product.material}</ListGroup.Item>
+          <ListGroup.Item>Color of {product.color}</ListGroup.Item>
         </ListGroup.Item>
 
         {/* // show review section  */}
         <Accordion defaultActiveKey="0">
           <Accordion.Item eventKey="0">
             <Accordion.Header onClick={getReview}>
-              Show Reviews
+              ⭐⭐⭐⭐⭐ ({reviews.length} Reviews)
             </Accordion.Header>
             <Accordion.Body>
               {showReviews && reviews.length === 0 ? (
@@ -186,8 +224,8 @@ function ProductDetail() {
               ) : (
                 reviews.map((review) => (
                   <Card key={review._id} className="mb-3">
-                    <Card.Body>
-                      {/* <Card.Title>{review.user.firstName}</Card.Title> */}
+                    <Card.Body className="d-flex gap-3">
+                      <Card.Title>{review.user.firstName}</Card.Title>
                       <div>
                         {[1, 2, 3, 4, 5].map((star) => (
                           <span key={star}>
@@ -195,44 +233,80 @@ function ProductDetail() {
                           </span>
                         ))}
                       </div>
-                      <Card.Text> {review.reviewText} </Card.Text>
+                      {/* REVIEW TEXT */}
+                      <Card.Text style={{ marginBottom: 0, color: "#555" }}>
+                        {" "}
+                        {review.reviewText}{" "}
+                      </Card.Text>
+                      {/* ACTION ICONS */}
                       {isLoggedIn &&
                         (loggedUserId === review.user?._id ||
                           loggedUserRole === "admin") && (
-                          <>
-                            <button
-                              style={{ margin: "0.5rem" }}
-                              type="button"
-                              className="btn btn-primary"
+                          <div className="d-flex gap-3 align-items-center ml-auto justify-content-end">
+                            {/* EDIT */}
+                            <FiEdit2
+                              style={{
+                                cursor: "pointer",
+                                color: "#8B6B4A",
+                                fontSize: "18px",
+                              }}
                               onClick={() => setShowEditReviewForm(true)}
-                            >
-                              Edit review
-                            </button>
-
-                            {ShowEditReviewForm && (
-                              <EditReview
-                                productId={productId}
-                                reviewId={review._id}
-                                setShowEditReviewForm={setShowEditReviewForm}
-                                getReview={getReview}
-                              />
-                            )}
-                          </>
+                            />
+                          </div>
                         )}
-                       {isLoggedIn &&
+                      {isLoggedIn &&
                         (loggedUserId === review.user?._id ||
                           loggedUserRole === "admin") && (
-                          <>
-                            <button
-                              style={{ margin: "0.5rem" }}
-                              type="button"
-                              className="btn btn-primary"
+                          <div className="d-flex gap-3 align-items-center ml-auto justify-content-end">
+                            {/* DELETE */}
+                            <FiTrash2
+                              style={{
+                                cursor: "pointer",
+                                color: "#8B6B4A",
+                                fontSize: "18px",
+                              }}
                               onClick={() => setShowDeleteModalReview(true)}
-                            >
-                              Delete review
-                            </button>
-                          </>
+                            />
+                          </div>
                         )}
+
+                      {/* ***************handle the popup for adding a review ******* */}
+                      <Modal
+                        show={showReviewForm}
+                        onHide={() => setShowReviewForm(false)}
+                        centered
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title>Add Review</Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>
+                          <AddReview
+                            productId={productId}
+                            setShowReviewForm={setShowReviewForm}
+                            getReview={getReview}
+                          />
+                        </Modal.Body>
+                      </Modal>
+                      {/* ***************handle the popup for editing a review ******* */}
+                      <Modal
+                        show={ShowEditReviewForm}
+                        onHide={() => setShowEditReviewForm(false)}
+                        centered
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title>Edit Review</Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>
+                          <EditReview
+                            productId={productId}
+                            reviewId={review._id}
+                            setShowEditReviewForm={setShowEditReviewForm}
+                            getReview={getReview}
+                          />
+                        </Modal.Body>
+                      </Modal>
                       {/* **********handle the popup for deletion a review ******* */}
                       <Modal
                         show={showDeleteModalReview}
@@ -270,66 +344,75 @@ function ProductDetail() {
                   </Card>
                 ))
               )}
+              {isLoggedIn && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setShowReviewForm(true)}
+                    style={{
+                      width: "100%",
+                      marginTop: "1rem",
+                      backgroundColor: "#dfa871",
+                      border: "none",
+                      borderRadius: "10px",
+                      padding: "0.7rem",
+                      transition: "0.3s",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.target.style.backgroundColor = "#ae8a64")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.target.style.backgroundColor = "#dfa871")
+                    }
+                  >
+                    Add review
+                  </button>
+                </>
+              )}
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
 
         {/* // check if user is logged in ? */}
 
-        <Card.Body>
+        <Card.Body className="d-flex justify-content-evenly" >
           <button
-            style={{ margin: "0.5rem" }}
+            style={{ borderRadius: "8px",}}
             type="button"
-            className="btn btn-secondary"
+             className="d-flex align-items-center gap-2 shadow-sm"
             onClick={() => {
               navigate("/productList");
             }}
           >
+            <FiArrowLeft />
             Back
           </button>
 
           {isLoggedIn && loggedUserRole === "admin" && (
             <>
               <button
-                style={{ margin: "0.5rem" }}
+               variant="outline-primary"
+                style={{ borderRadius: "8px" }}
                 type="button"
-                className="btn btn-primary"
+                className="d-flex align-items-center gap-2"
                 onClick={() => {
                   navigate(`/editProduct/${productId}`);
                 }}
               >
+                 <FiEdit2 />
                 edit
               </button>
 
               <button
-                style={{ margin: "0.5rem" }}
+                variant="outline-danger"
+                style={{ borderRadius: "8px" }}
                 type="button"
-                className="btn btn-danger"
+               className="d-flex align-items-center gap-2"
                 onClick={() => setShowDeleteModal(true)}
               >
+                 <FiTrash2 />
                 delete
               </button>
-            </>
-          )}
-
-          {isLoggedIn && (
-            <>
-              <button
-                style={{ margin: "0.5rem" }}
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setShowReviewForm(true)}
-              >
-                Add review
-              </button>
-
-              {showReviewForm && (
-                <AddReview
-                  productId={productId}
-                  setShowReviewForm={setShowReviewForm}
-                  getReview={getReview}
-                />
-              )}
             </>
           )}
 

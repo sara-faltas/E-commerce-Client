@@ -12,6 +12,7 @@ import ProductDetail from "./pages/ProductDetail"
 import Dashboard from "./pages/Admin/Dashboard";
 import AddProduct from "./pages/Admin/AddProduct"
 import EditProduct from "./pages/Admin/EditProduct";
+import UsersList from "./pages/Admin/UsersList";
 
 import UserProfile from "./pages/Users/UserProfile"
 import AddReview from "./pages/Users/AddReview"
@@ -49,6 +50,7 @@ function App() {
 
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/addProduct" element={<AddProduct/>} />
+        <Route path="/users" element={<UsersList/>} />
         <Route path="/editProduct/:productId" element={<EditProduct/>} />
 
         <Route path="/userProfile" element={<UserProfile/>} />

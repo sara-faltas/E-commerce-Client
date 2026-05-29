@@ -20,6 +20,7 @@ function AddProduct() {
   const [stock, setStock] = useState("");
   const [edition, setEdition] = useState("");
   const [material, setMaterial] = useState("");
+  const [color, setColor] = useState("");
 
   const navigate = useNavigate();
 
@@ -35,7 +36,8 @@ function AddProduct() {
       size: size,
       stock: stock,
       edition: edition,
-      material: material
+      material: material,
+      color: color
     };
 
     try {
@@ -171,6 +173,18 @@ function AddProduct() {
           />
         </InputGroup>
 
+                 <InputGroup className="mb-4">
+          <InputGroup.Text id="inputGroup-sizing-default">
+            Color
+          </InputGroup.Text>
+          <Form.Control
+            aria-label="Default"
+            aria-describedby="inputGroup-sizing-default"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+          />
+        </InputGroup>
+
         <InputGroup className="mb-4">
           <InputGroup.Text id="inputGroup-sizing-default">
             Stock
@@ -223,9 +237,11 @@ function AddProduct() {
         </Form.Select>
 
         <button
-          style={{ margin: "1rem" }}
-          type="submit"
-          className="btn btn-primary"
+               variant="outline-primary"
+                style={{ borderRadius: "8px" }}
+                type="submit"
+                className="d-flex align-items-center gap-2"
+                
         >
           Add Product
         </button>

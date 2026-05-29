@@ -23,6 +23,7 @@ function EditProduct() {
   const [stock, setStock] = useState("");
   const [edition, setEdition] = useState("");
   const [material, setMaterial] = useState("");
+  const [color, setColor] = useState("");
 
   /*************************** */
   useEffect(() => {
@@ -45,6 +46,7 @@ function EditProduct() {
       setEdition(response.data.edition);
       setImageUrl(response.data.image);
       setMaterial(response.data.material);
+      setColor(response.data.color);
     } catch (error) {
       console.log(error)
         navigate("/error")
@@ -65,7 +67,8 @@ function EditProduct() {
       size: size,
       stock: stock,
       edition: edition,
-      material: material
+      material: material,
+      color: color
     };
 
     try {
@@ -193,6 +196,18 @@ function EditProduct() {
             aria-describedby="inputGroup-sizing-default"
             value={material}
             onChange={(e) => setMaterial(e.target.value)}
+          />
+        </InputGroup>
+
+        <InputGroup className="mb-4">
+          <InputGroup.Text id="inputGroup-sizing-default">
+            Color
+          </InputGroup.Text>
+          <Form.Control
+            aria-label="Default"
+            aria-describedby="inputGroup-sizing-default"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
           />
         </InputGroup>
 

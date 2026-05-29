@@ -8,6 +8,7 @@ import NavbarBrand from "react-bootstrap/NavbarBrand";
 import NavbarToggle from "react-bootstrap/NavbarToggle";
 import { Button } from "bootstrap";
 import { Navigate } from "react-router-dom";
+import { FiUser } from "react-icons/fi";
 
 import logo from "../images/authenticLogo.png";
 
@@ -35,7 +36,7 @@ function MyNavbar() {
   }
 
   return (
-    <Navbar expand="sm" className="py-1" style={{ backgroundColor: "white" }}>
+    <Navbar expand="sm" className="py-0" style={{ backgroundColor: "white" ,height: "60px" }}>
       <Container fluid>
         <Navbar.Brand as={Link} to="/">
           <img
@@ -58,11 +59,11 @@ function MyNavbar() {
          <Nav className="ms-auto">
             {!isLoggedIn && (
               <>
-                <Nav.Link as={Link} to="/signup">
+                {/* <Nav.Link as={Link} to="/signup">
                   SignUp
-                </Nav.Link>
-                <Nav.Link as={Link} to="/login">
-                  Login
+                </Nav.Link> */}
+                <Nav.Link as={Link} to="/login" style={{fontSize: "1.4rem",display: "flex",alignItems: "center",color: "#8B6B4A",}}> 
+                  <FiUser />
                 </Nav.Link>
                  
                     {/* <Nav.Link as={Link} to="/userProfile">
@@ -83,7 +84,7 @@ function MyNavbar() {
                   </Nav.Link>
                   
                 )}
-                 <Nav.Link as={Link} to="/Favorite">
+                 <Nav.Link as={Link} to="/">
                     ❤️
                   </Nav.Link>
                 <Nav.Link onClick={handleLogout} style={{ cursor: "pointer" }}>

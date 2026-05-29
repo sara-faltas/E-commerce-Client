@@ -32,9 +32,9 @@ function ProductCard(props) {
         
         <Card.Img variant="top" src={props.product.image}  
         style={{
-         height: "300px",
+         height: "200px",
          objectFit: "cover",
-          
+         borderRadius: "10px",
         }}/>
         
         <Card.Body  style={{textAlign: "left",}}>

@@ -56,14 +56,16 @@ function Signup() {
    
       <div>
       <h3 style={{ marginTop: "4rem", marginBottom: "2rem" }}>
-        Sign up
+        SIGN UP
       </h3>
-
+      <h6 style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+        Please fill in the information below:
+      </h6>
       <form style={{ margin: "2rem" }}>
        
         <InputGroup className="mb-4">
           <InputGroup.Text id="inputGroup-sizing-default">
-            First Name
+            First name
           </InputGroup.Text>
           <Form.Control
             aria-label="Default"
@@ -76,7 +78,7 @@ function Signup() {
       
        <InputGroup className="mb-4">
           <InputGroup.Text id="inputGroup-sizing-default">
-            Last Name
+            Last name
           </InputGroup.Text>
           <Form.Control
             aria-label="Default"
@@ -89,7 +91,7 @@ function Signup() {
 
         <InputGroup className="mb-4">
           <InputGroup.Text id="inputGroup-sizing-default">
-            Email
+            E-mail
           </InputGroup.Text>
           <Form.Control
             aria-label="Default"
@@ -116,7 +118,19 @@ function Signup() {
         </InputGroup>
 
          
-          <button onClick={handleSignup} >
+          <button onClick={handleSignup}
+          style={{
+            width: "100%",
+            marginTop: "1rem",
+            backgroundColor: "#dfa871",
+            border: "none",
+            borderRadius: "10px",
+            padding: "0.7rem",
+            transition: "0.3s",
+          }}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = "#ae8a64")}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = "#dfa871")}
+         >
             Create Account
           </button>
 
