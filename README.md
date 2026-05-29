@@ -1,16 +1,160 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# 🛍️ E-Commerce Web Application
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+A modern full-stack eCommerce web application built using the MERN stack.
+This project allows users to browse products, view product details, create accounts, leave reviews, and manage products through an admin dashboard.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# 🚀 Features
 
-## Expanding the ESLint configuration
+## 👤 User Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* User Registration & Login
+* JWT Authentication
+* Browse Products
+* Product Details Page
+* Product Reviews & Ratings
+* Responsive Design
+* User Profile Management
+* Product Search & Filtering
+
+## 🔑 Admin Features
+
+* Add Products
+* Edit Products
+* Delete Products
+* See all Users
+* Manage reviews 
+* Product Search & Filtering
+
+---
+
+# 🛠️ Technologies Used
+
+## Frontend
+
+* React.js
+* React Router
+* Bootstrap
+* Axios
+
+## Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+
+## Authentication
+
+* JWT (JSON Web Token)
+* bcrypt.js
+
+---
+
+# 📂 Project Structure
+
+```bash
+client/
+ ├── src/
+ ├── components/
+ ├── pages/
+ ├── context/
+ └── services/
+
+server/
+ ├── controllers/
+ ├── models/
+ ├── routes/
+ ├── middleware/
+ └── config/
+```
+
+---
+
+# ⚙️ Installation
+
+## Clone the repository
+
+```bash
+git clone https://github.com/yourusername/your-repository-name.git
+```
+
+## Navigate to project folder
+
+```bash
+cd your-repository-name
+```
+
+## Install dependencies
+
+### Backend
+
+```bash
+cd server
+npm install
+```
+
+### Frontend
+
+```bash
+cd client
+npm install
+```
+
+---
+
+# ▶️ Running the Project
+
+## Start backend server
+
+```bash
+cd server
+npm start
+```
+
+## Start frontend
+
+```bash
+cd client
+npm start
+```
+
+---
+
+# 🔐 Environment Variables
+
+Create a `.env` file in the server folder and add:
+
+```env
+MONGO_URI=your_mongodb_connection
+JWT_SECRET=your_secret_key
+PORT=5000
+```
+
+
+---
+
+# 📈 Future Improvements
+
+* Online Payment Integration
+* Dark Mode
+* User Prodile editing 
+* Manage Dashboard/Admin  
+* Customize bags/ adding colors 
+
+---
+
+# 👩‍💻 Author
+
+Developed by sara faltas
+
+GitHub: [https://github.com/yourusername](https://github.com/sara-faltas)
+
+---
+
+# ⭐ Support
+
+If you like this project, feel free to give it a star ⭐ on GitHub!

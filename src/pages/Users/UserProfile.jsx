@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import service from "../../services/index.services";
+import { Link } from "react-router-dom";
 
 function UserProfile() {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ function UserProfile() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  
 
   useEffect(() => {
     getProfile();
@@ -202,7 +204,9 @@ function UserProfile() {
                 reviews.map((review) => (
                   <Card key={review._id} className="mb-3 border-0 bg-light rounded-3 p-3">
                     <div className="d-flex align-items-center justify-content-between mb-2">
-                      <strong>Product{review.product?.title || "Product"}</strong>
+                      <strong>
+                        Product{review.product?.title || "Product"}
+                        </strong>
                       <span className="text-warning">{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</span>
                     </div>
                     <p className="mb-0 text-muted">{review.reviewText}</p>
