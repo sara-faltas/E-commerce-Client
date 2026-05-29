@@ -270,24 +270,6 @@ function ProductDetail() {
                           </div>
                         )}
 
-                      {/* ***************handle the popup for adding a review ******* */}
-                      <Modal
-                        show={showReviewForm}
-                        onHide={() => setShowReviewForm(false)}
-                        centered
-                      >
-                        <Modal.Header closeButton>
-                          <Modal.Title>Add Review</Modal.Title>
-                        </Modal.Header>
-
-                        <Modal.Body>
-                          <AddReview
-                            productId={productId}
-                            setShowReviewForm={setShowReviewForm}
-                            getReview={getReview}
-                          />
-                        </Modal.Body>
-                      </Modal>
                       {/* ***************handle the popup for editing a review ******* */}
                       <Modal
                         show={ShowEditReviewForm}
@@ -372,6 +354,24 @@ function ProductDetail() {
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
+
+        <Modal
+          show={showReviewForm}
+          onHide={() => setShowReviewForm(false)}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Add Review</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <AddReview
+              productId={productId}
+              setShowReviewForm={setShowReviewForm}
+              getReview={getReview}
+            />
+          </Modal.Body>
+        </Modal>
 
         {/* // check if user is logged in ? */}
 
