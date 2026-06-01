@@ -15,9 +15,9 @@ This project allows users to browse products, view product details, create accou
 * JWT Authentication
 * Browse Products
 * Product Details Page
-* Product Reviews & Ratings
+* Product Reviews & Ratings for logged users
 * Responsive Design
-* User Profile Management
+* User Profile Management 
 * Product Search & Filtering
 
 ## 🔑 Admin Features
@@ -76,19 +76,31 @@ server/
 
 # ⚙️ Installation
 
-## Clone the repository
+## Clone the repository for client
 
 ```bash
-git clone https://github.com/yourusername/your-repository-name.git
+git clone https://github.com/sara-faltas/E-commerce-Client
 ```
 
 ## Navigate to project folder
 
 ```bash
-cd your-repository-name
+cd E-commerce-Client
 ```
 
 ## Install dependencies
+
+## Clone the repository for server
+
+```bash
+git clone https://github.com/sara-faltas/E-Commerce-Server
+```
+
+## Navigate to project folder
+
+```bash
+cd E-commerce-Server
+
 
 ### Backend
 
@@ -133,7 +145,10 @@ MONGO_URI=your_mongodb_connection
 JWT_SECRET=your_secret_key
 PORT=5000
 ```
-
+---
+# Data For testing 
+* User : email: "maria@test.com" , pass: "Testtest99"
+* Admin: email: "admin@test.com" , pass: "Testtest99"
 
 ---
 
@@ -151,7 +166,7 @@ PORT=5000
 
 Developed by sara faltas
 
-GitHub: [https://github.com/yourusername](https://github.com/sara-faltas)
+GitHub: [https://github.com/SaraFaltas](https://github.com/sara-faltas)
 
 ---
 
